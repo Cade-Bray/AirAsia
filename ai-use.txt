@@ -2,6 +2,9 @@ The AI tool or tools used
 I've used Antigravity IDE with the Gemini Flash 3.8 on Medium context for the agent.
 
 The prompt or prompts you used
+- Generate some gift card assets in the images repository for me so that the prototyping feels more flushed out. You can reference the wireframes as needed.
+- Edit the airasia.jpg in the images to be airasia_nobackground.jpg and remove the white background.
+- Suggest a color pallete that compliments the AirAsia red.
 - 
 
 A brief explanation of how AI supported your work

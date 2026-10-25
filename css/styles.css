@@ -1,0 +1,21 @@
+:root {
+  /* Brand Colors */
+  --airasia-red: #ED1C24;
+  --airasia-red-hover: #D01018;
+  --airasia-red-subtle: #FEE2E2;
+
+  /* Rewards & Points Accent */
+  --rewards-gold: #F59E0B;
+  --rewards-gold-light: #FEF3C7;
+
+  /* Neutrals & Typography */
+  --text-primary: #1E293B;
+  --text-muted: #64748B;
+  --bg-main: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --border-color: #E2E8F0;
+
+  /* Functional / Feedback */
+  --success: #10B981;
+  --success-bg: #D1FAE5;
+}

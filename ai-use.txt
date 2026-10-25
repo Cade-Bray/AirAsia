@@ -1,0 +1,14 @@
+The AI tool or tools used
+I've used Antigravity IDE with the Gemini Flash 3.8 on Medium context for the agent.
+
+The prompt or prompts you used
+- 
+
+A brief explanation of how AI supported your work
+AI has supported me through the developement of this website by excelerating my developement 
+velocity. It's allowed me to rapid prototype and sort through developement documentation quickly.
+In addition, it's allowed me to generate assets for prototyping so understand the final version
+of the project better.
+
+One example of an AI suggestion you tested, changed, or rejected
+

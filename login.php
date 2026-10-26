@@ -40,7 +40,7 @@
                             <h1 class="card-title-header">Sign-In</h1>
 
                             <!-- Login Form -->
-                            <form action="card-list.php" method="POST" id="loginForm">
+                            <form action="card-list.php" method="POST" id="loginForm" novalidate>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <div class="input-group has-validation">

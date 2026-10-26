@@ -9,6 +9,8 @@ The prompt or prompts you used
 - Show me an example of making a card reactive in bootstrap when I hover over it.
 - Show me how to make a gradiate with the light read pallete for the Air Asia Logo.
 - Help me trouble shoot the error red not moving around the icon square as well.
+- Move the header and footer of the login page to all pages for conformity.
+- Add demo tag lines to each of the gift card sub sections.
 
 A brief explanation of how AI supported your work
 AI has supported me through the developement of this website by excelerating my developement 

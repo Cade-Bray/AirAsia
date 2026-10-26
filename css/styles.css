@@ -275,6 +275,158 @@ body {
   padding: 0.75rem 1rem;
 }
 
+/* Nav Actions & User Greeting */
+.nav-user-greeting {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-user-name {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.btn-nav-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background-color: #FFFFFF;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-nav-action:hover {
+  border-color: var(--airasia-red);
+  color: var(--airasia-red);
+  background-color: var(--airasia-red-subtle);
+}
+
+/* Administrative Action (highlighted as indicated in requirements) */
+.btn-nav-admin {
+  border-color: rgba(245, 158, 11, 0.5);
+  background-color: var(--rewards-gold-light);
+  color: #B45309;
+}
+
+.btn-nav-admin:hover {
+  border-color: var(--rewards-gold);
+  background-color: #FDE68A;
+  color: #92400E;
+}
+
+.btn-nav-logout {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-nav-logout:hover {
+  color: var(--airasia-red);
+  background-color: var(--airasia-red-subtle);
+}
+
+/* Page Header Box (from wireframe) */
+.page-header-box {
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.85rem 2.25rem;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+  display: inline-block;
+}
+
+.page-header-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Gift Cards Component */
+.gift-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img-link {
+  overflow: hidden;
+  background-color: #F1F5F9;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.gift-card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.gift-card:hover .gift-card-img {
+  transform: scale(1.04);
+}
+
+.gift-card-title-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  transition: color 0.2s ease;
+}
+
+.gift-card-title-link:hover {
+  color: var(--airasia-red);
+}
+
+.points-badge {
+  background-color: var(--rewards-gold-light);
+  color: #B45309;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-outline-airasia {
+  border: 1.5px solid var(--airasia-red);
+  color: var(--airasia-red);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-outline-airasia:hover {
+  background-color: var(--airasia-red);
+  color: #FFFFFF;
+  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.25);
+}
+
 /* Footer */
 .app-footer {
   margin-top: auto;

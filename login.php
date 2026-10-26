@@ -34,48 +34,48 @@
             <div class="col-12 col-md-10 col-lg-7 col-xl-6">
                 <!-- Outer Frame Wrapper (matching the wireframe outer container structure) -->
                 <div class="outer-frame">
-                    <!-- Bootstrap Card (Reactive to Hovers) -->
+                    <!-- Bootstrap Card -->
                     <div class="card card-reactive shadow-sm">
                         <div class="card-body p-4 p-sm-5">
                             <h1 class="card-title-header">Sign-In</h1>
 
                             <!-- Login Form -->
-                            <form action="card-list.php" method="POST" id="loginForm" novalidate>
+                            <form action="card-list.php" method="POST" id="loginForm">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0 text-muted">
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text">
                                             <i class="bi bi-person"></i>
                                         </span>
                                         <input type="text" 
-                                               class="form-control border-start-0 ps-0" 
+                                               class="form-control" 
                                                id="username" 
                                                name="username" 
                                                placeholder="Enter your username" 
                                                required 
                                                autocomplete="username">
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide your username.
+                                        <div class="invalid-feedback">
+                                            Please provide your username.
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="mb-4">
                                     <label for="password" class="form-label">Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0 text-muted">
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text">
                                             <i class="bi bi-lock"></i>
                                         </span>
                                         <input type="password" 
-                                               class="form-control border-start-0 ps-0" 
+                                               class="form-control" 
                                                id="password" 
                                                name="password" 
                                                placeholder="Enter your password" 
                                                required 
                                                autocomplete="current-password">
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide your password.
+                                        <div class="invalid-feedback">
+                                            Please provide your password.
+                                        </div>
                                     </div>
                                 </div>
 

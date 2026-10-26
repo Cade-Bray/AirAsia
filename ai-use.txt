@@ -8,7 +8,7 @@ The prompt or prompts you used
 - Added the base HTML page data to each of the php pages such as doctype, html, head, body, meta tags. Use this tag for the cdn of the bootstrap we're using: <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
 - Show me an example of making a card reactive in bootstrap when I hover over it.
 - Show me how to make a gradiate with the light read pallete for the Air Asia Logo.
-- 
+- Help me trouble shoot the error red not moving around the icon square as well.
 
 A brief explanation of how AI supported your work
 AI has supported me through the developement of this website by excelerating my developement 

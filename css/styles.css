@@ -57,7 +57,7 @@ body {
 }
 
 .brand-logo {
-  height: 44px;
+  height: 65px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -106,7 +106,6 @@ body {
 /* Hover reactivity on Bootstrap cards */
 .card.card-reactive:hover,
 .card-reactive:hover {
-  transform: translateY(-4px);
   box-shadow: 0 20px 25px -5px rgba(237, 28, 36, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   border-color: rgba(237, 28, 36, 0.35);
 }
@@ -139,6 +138,25 @@ body {
   margin-bottom: 0.4rem;
 }
 
+/* Input Group & Controls */
+.input-group {
+  position: relative;
+  border-radius: 0.65rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.input-group .input-group-text {
+  border: 1.5px solid var(--border-color);
+  border-right: none;
+  background-color: #FFFFFF;
+  color: var(--text-muted);
+  border-top-left-radius: 0.65rem !important;
+  border-bottom-left-radius: 0.65rem !important;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
 .form-control {
   border: 1.5px solid var(--border-color);
   border-radius: 0.65rem;
@@ -149,9 +167,63 @@ body {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.input-group .form-control {
+  border-left: none;
+  border-top-right-radius: 0.65rem !important;
+  border-bottom-right-radius: 0.65rem !important;
+}
+
+/* Unified Focus State (encompasses icon square and input field) */
+.input-group:focus-within:not(:has(.form-control:invalid)):not(:has(.form-control.is-invalid)) {
+  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.15);
+}
+
+.input-group:focus-within .input-group-text {
+  border-color: var(--airasia-red);
+  color: var(--airasia-red);
+}
+
+.input-group:focus-within .form-control {
+  border-color: var(--airasia-red);
+}
+
 .form-control:focus {
   border-color: var(--airasia-red);
-  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.15);
+  box-shadow: none;
+}
+
+/* Error / Invalid State: Red border and styling encompasses the icon square */
+.was-validated .input-group:has(.form-control:invalid),
+.input-group:has(.form-control.is-invalid),
+.input-group.is-invalid {
+  box-shadow: none;
+}
+
+.was-validated .input-group:has(.form-control:invalid) .input-group-text,
+.input-group:has(.form-control.is-invalid) .input-group-text,
+.input-group.is-invalid .input-group-text {
+  border-color: var(--airasia-red) !important;
+  color: var(--airasia-red) !important;
+  background-color: rgba(254, 226, 226, 0.45) !important;
+}
+
+.was-validated .input-group:has(.form-control:invalid) .form-control,
+.input-group:has(.form-control.is-invalid) .form-control,
+.input-group.is-invalid .form-control {
+  border-color: var(--airasia-red) !important;
+}
+
+/* Invalid Focus State: Encompassing red glow */
+.was-validated .input-group:has(.form-control:invalid:focus),
+.input-group:has(.form-control.is-invalid:focus) {
+  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.2) !important;
+}
+
+.invalid-feedback {
+  color: var(--airasia-red);
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
 }
 
 /* AirAsia Primary Button */

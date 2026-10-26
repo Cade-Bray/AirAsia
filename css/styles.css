@@ -1,12 +1,15 @@
 :root {
-  /* Brand Colors */
+  /* Brand Palette */
   --airasia-red: #ED1C24;
   --airasia-red-hover: #D01018;
   --airasia-red-subtle: #FEE2E2;
+  --bg-red-subtle: rgba(254, 226, 226, 0.45);
+  --border-red-subtle: rgba(237, 28, 36, 0.35);
 
-  /* Rewards & Points Accent */
+  /* Rewards & Accent */
   --rewards-gold: #F59E0B;
   --rewards-gold-light: #FEF3C7;
+  --rewards-gold-text: #B45309;
 
   /* Neutrals & Typography */
   --text-primary: #1E293B;
@@ -15,12 +18,24 @@
   --bg-card: #FFFFFF;
   --border-color: #E2E8F0;
 
-  /* Functional / Feedback */
-  --success: #10B981;
-  --success-bg: #D1FAE5;
+  /* Shared Tokens */
+  --radius-sm: 0.5rem;
+  --radius-input: 0.65rem;
+  --radius-md: 0.75rem;
+  --radius-card: 1rem;
+  --radius-frame: 1.25rem;
+  --radius-pill: 9999px;
+
+  /* Shadows, Rings & Transitions */
+  --focus-ring-red: 0 0 0 0.25rem rgba(237, 28, 36, 0.15);
+  --focus-ring-invalid: 0 0 0 0.25rem rgba(237, 28, 36, 0.2);
+  --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  --shadow-card-hover: 0 20px 25px -5px rgba(237, 28, 36, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --transition-fast: 0.2s ease;
+  --transition-card: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
-/* Base Body Styles */
+/* Base Body & Layout */
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: var(--bg-main);
@@ -30,7 +45,20 @@ body {
   flex-direction: column;
 }
 
-/* Top Navigation Bar with Left-Side Framing */
+/* Outer Wireframe Content Frame */
+.outer-frame {
+  background-color: rgba(254, 226, 226, 0.25);
+  border: 1px solid rgba(237, 28, 36, 0.15);
+  border-radius: var(--radius-frame);
+  padding: 2.5rem 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(237, 28, 36, 0.04);
+}
+
+@media (min-width: 768px) {
+  .outer-frame { padding: 3.5rem 2.5rem; }
+}
+
+/* Top Navigation Bar & Left-Side Framing */
 .top-navbar {
   background-color: var(--bg-card);
   border-bottom: 1px solid var(--border-color);
@@ -38,7 +66,6 @@ body {
   padding: 0.75rem 0;
 }
 
-/* Left-Side Framing Anchor */
 .navbar-brand-framing {
   display: flex;
   align-items: center;
@@ -48,12 +75,11 @@ body {
   border-radius: 2px;
   background: linear-gradient(90deg, rgba(254, 226, 226, 0.35) 0%, transparent 100%);
   text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color var(--transition-fast);
 }
 
 .navbar-brand-framing:hover {
   background: linear-gradient(90deg, rgba(254, 226, 226, 0.6) 0%, transparent 100%);
-  text-decoration: none;
 }
 
 .brand-logo {
@@ -61,12 +87,6 @@ body {
   width: auto;
   object-fit: contain;
   display: block;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
 }
 
 .brand-subtitle {
@@ -77,156 +97,77 @@ body {
   text-transform: uppercase;
 }
 
-/* Outer Content Frame (retaining wireframe layout structure) */
-.outer-frame {
-  background-color: rgba(254, 226, 226, 0.25);
-  border: 1px solid rgba(237, 28, 36, 0.15);
-  border-radius: 1.25rem;
-  padding: 2.5rem 1.5rem;
-  box-shadow: 0 4px 20px -2px rgba(237, 28, 36, 0.04);
+.nav-user-greeting {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-@media (min-width: 768px) {
-  .outer-frame {
-    padding: 3.5rem 2.5rem;
-  }
-}
-
-/* Reactive Bootstrap Cards */
-.card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.25s ease;
-}
-
-/* Hover reactivity on Bootstrap cards */
-.card.card-reactive:hover,
-.card-reactive:hover {
-  box-shadow: 0 20px 25px -5px rgba(237, 28, 36, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  border-color: rgba(237, 28, 36, 0.35);
-}
-
-.card:focus-within {
-  border-color: rgba(237, 28, 36, 0.5);
-}
-
-/* Card Header & Title */
-.card-title-header {
-  font-size: 1.6rem;
+.nav-user-name {
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  text-align: center;
 }
 
-.card-subtitle-text {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Form Controls */
-.form-label {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  margin-bottom: 0.4rem;
-}
-
-/* Input Group & Controls */
-.input-group {
-  position: relative;
-  border-radius: 0.65rem;
-  transition: box-shadow 0.2s ease;
-}
-
-.input-group .input-group-text {
-  border: 1.5px solid var(--border-color);
-  border-right: none;
-  background-color: #FFFFFF;
-  color: var(--text-muted);
-  border-top-left-radius: 0.65rem !important;
-  border-bottom-left-radius: 0.65rem !important;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
-}
-
-.form-control {
-  border: 1.5px solid var(--border-color);
-  border-radius: 0.65rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  background-color: #FFFFFF;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.input-group .form-control {
-  border-left: none;
-  border-top-right-radius: 0.65rem !important;
-  border-bottom-right-radius: 0.65rem !important;
-}
-
-/* Unified Focus State (encompasses icon square and input field) */
-.input-group:focus-within:not(:has(.form-control:invalid)):not(:has(.form-control.is-invalid)) {
-  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.15);
-}
-
-.input-group:focus-within .input-group-text {
-  border-color: var(--airasia-red);
-  color: var(--airasia-red);
-}
-
-.input-group:focus-within .form-control {
-  border-color: var(--airasia-red);
-}
-
-.form-control:focus {
-  border-color: var(--airasia-red);
-  box-shadow: none;
-}
-
-/* Error / Invalid State: Red border and styling encompasses the icon square */
-.was-validated .input-group:has(.form-control:invalid),
-.input-group:has(.form-control.is-invalid),
-.input-group.is-invalid {
-  box-shadow: none;
-}
-
-.was-validated .input-group:has(.form-control:invalid) .input-group-text,
-.input-group:has(.form-control.is-invalid) .input-group-text,
-.input-group.is-invalid .input-group-text {
-  border-color: var(--airasia-red) !important;
-  color: var(--airasia-red) !important;
-  background-color: rgba(254, 226, 226, 0.45) !important;
-}
-
-.was-validated .input-group:has(.form-control:invalid) .form-control,
-.input-group:has(.form-control.is-invalid) .form-control,
-.input-group.is-invalid .form-control {
-  border-color: var(--airasia-red) !important;
-}
-
-/* Invalid Focus State: Encompassing red glow */
-.was-validated .input-group:has(.form-control:invalid:focus),
-.input-group:has(.form-control.is-invalid:focus) {
-  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.2) !important;
-}
-
-.invalid-feedback {
-  color: var(--airasia-red);
-  font-weight: 500;
+/* Nav & Small Action Buttons */
+.btn-nav-action,
+.btn-outline-airasia,
+.btn-nav-logout {
   font-size: 0.85rem;
-  margin-top: 0.35rem;
+  font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
 }
 
-/* AirAsia Primary Button */
+.btn-nav-action:hover,
+.btn-outline-airasia:hover {
+  border-color: var(--airasia-red);
+  color: #FFFFFF;
+  background-color: var(--airasia-red);
+}
+
+.btn-outline-airasia {
+  border-color: var(--airasia-red);
+  color: var(--airasia-red);
+}
+
+.btn-outline-airasia:hover {
+  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.25);
+}
+
+.btn-nav-admin {
+  border-color: rgba(245, 158, 11, 0.5);
+  background-color: var(--rewards-gold-light);
+  color: var(--rewards-gold-text);
+}
+
+.btn-nav-admin:hover {
+  border-color: var(--rewards-gold);
+  background-color: #FDE68A;
+  color: #92400E;
+}
+
+.btn-nav-logout {
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+.btn-nav-logout:hover {
+  color: var(--airasia-red);
+  background-color: var(--airasia-red-subtle);
+  border-color: transparent;
+}
+
+/* Primary AirAsia Button */
 .btn-airasia {
   background-color: var(--airasia-red);
   border: none;
@@ -234,9 +175,13 @@ body {
   font-weight: 700;
   letter-spacing: 0.04em;
   padding: 0.8rem 1.5rem;
-  border-radius: 0.65rem;
+  border-radius: var(--radius-input);
   font-size: 0.95rem;
-  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), transform 0.15s ease, box-shadow var(--transition-fast);
 }
 
 .btn-airasia:hover {
@@ -252,12 +197,16 @@ body {
 }
 
 /* Links */
+.forgot-password-link,
+.gift-card-title-link {
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
 .forgot-password-link {
   color: var(--airasia-red);
   font-size: 0.875rem;
   font-weight: 500;
-  text-decoration: none;
-  transition: color 0.15s ease, text-decoration 0.15s ease;
 }
 
 .forgot-password-link:hover {
@@ -265,85 +214,40 @@ body {
   text-decoration: underline;
 }
 
-/* Alerts / Error message box */
-.alert-error-custom {
-  background-color: var(--airasia-red-subtle);
-  border: 1px solid rgba(237, 28, 36, 0.3);
-  color: #991B1B;
-  border-radius: 0.65rem;
-  font-size: 0.875rem;
-  padding: 0.75rem 1rem;
-}
-
-/* Nav Actions & User Greeting */
-.nav-user-greeting {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.nav-user-name {
+.gift-card-title-link {
+  color: var(--text-primary);
   font-weight: 700;
-  color: var(--text-primary);
+  font-size: 1.15rem;
 }
 
-.btn-nav-action {
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.45rem 0.95rem;
-  border-radius: 0.5rem;
+.gift-card-title-link:hover {
+  color: var(--airasia-red);
+}
+
+/* Cards & Reactive Hovers */
+.card {
+  background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  background-color: #FFFFFF;
-  color: var(--text-primary);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-card);
 }
 
-.btn-nav-action:hover {
-  border-color: var(--airasia-red);
-  color: var(--airasia-red);
-  background-color: var(--airasia-red-subtle);
+.card.card-reactive:hover,
+.card-reactive:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-red-subtle);
 }
 
-/* Administrative Action (highlighted as indicated in requirements) */
-.btn-nav-admin {
-  border-color: rgba(245, 158, 11, 0.5);
-  background-color: var(--rewards-gold-light);
-  color: #B45309;
+.card:focus-within {
+  border-color: rgba(237, 28, 36, 0.5);
 }
 
-.btn-nav-admin:hover {
-  border-color: var(--rewards-gold);
-  background-color: #FDE68A;
-  color: #92400E;
-}
-
-.btn-nav-logout {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.45rem 0.85rem;
-  border-radius: 0.5rem;
-  border: 1px solid transparent;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btn-nav-logout:hover {
-  color: var(--airasia-red);
-  background-color: var(--airasia-red-subtle);
-}
-
-/* Page Header Box (from wireframe) */
+/* Header Boxes */
 .page-header-box {
   background-color: var(--bg-card);
   border: 1.5px solid var(--border-color);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-md);
   padding: 0.85rem 2.25rem;
   box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
   display: inline-block;
@@ -357,6 +261,21 @@ body {
   letter-spacing: -0.01em;
 }
 
+.card-title-header {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.card-subtitle-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
 /* Gift Cards Component */
 .gift-card {
   overflow: hidden;
@@ -367,8 +286,8 @@ body {
 .card-img-link {
   overflow: hidden;
   background-color: #F1F5F9;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: var(--radius-card);
+  border-top-right-radius: var(--radius-card);
 }
 
 .gift-card-img {
@@ -383,51 +302,132 @@ body {
   transform: scale(1.04);
 }
 
-.gift-card-title-link {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.15rem;
-  transition: color 0.2s ease;
-}
-
-.gift-card-title-link:hover {
-  color: var(--airasia-red);
-}
-
 .points-badge {
   background-color: var(--rewards-gold-light);
-  color: #B45309;
+  color: var(--rewards-gold-text);
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.45rem 0.85rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
 
-.btn-outline-airasia {
-  border: 1.5px solid var(--airasia-red);
-  color: var(--airasia-red);
+/* Form Controls & Input Groups */
+.form-label {
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.4rem 0.95rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
 }
 
-.btn-outline-airasia:hover {
-  background-color: var(--airasia-red);
-  color: #FFFFFF;
-  box-shadow: 0 4px 10px rgba(237, 28, 36, 0.25);
+.form-control,
+.form-select {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-input);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-/* Footer */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--airasia-red);
+  box-shadow: none;
+}
+
+.input-group {
+  position: relative;
+  border-radius: var(--radius-input);
+  transition: box-shadow var(--transition-fast);
+}
+
+.input-group .input-group-text {
+  border: 1.5px solid var(--border-color);
+  border-right: none;
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  border-top-left-radius: var(--radius-input) !important;
+  border-bottom-left-radius: var(--radius-input) !important;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.input-group .form-control {
+  border-left: none;
+  border-top-right-radius: var(--radius-input) !important;
+  border-bottom-right-radius: var(--radius-input) !important;
+}
+
+/* Input Focus & Error States (encompassing icon square) */
+.input-group:focus-within:not(:has(:invalid)):not(:has(.is-invalid)) {
+  box-shadow: var(--focus-ring-red);
+}
+
+.input-group:focus-within .input-group-text,
+.input-group:focus-within .form-control {
+  border-color: var(--airasia-red);
+}
+
+.input-group:focus-within .input-group-text {
+  color: var(--airasia-red);
+}
+
+/* Error States with :is() selector consolidation */
+.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) {
+  box-shadow: none;
+}
+
+.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) .input-group-text {
+  border-color: var(--airasia-red) !important;
+  color: var(--airasia-red) !important;
+  background-color: var(--bg-red-subtle) !important;
+}
+
+.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) .form-control {
+  border-color: var(--airasia-red) !important;
+}
+
+.input-group:is(:has(:invalid:focus), :has(.is-invalid:focus)) {
+  box-shadow: var(--focus-ring-invalid) !important;
+}
+
+.invalid-feedback {
+  color: var(--airasia-red);
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+/* File Upload Box */
+.image-upload-box {
+  background-color: var(--bg-card);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.image-upload-box:hover {
+  border-color: var(--airasia-red);
+  background-color: rgba(254, 226, 226, 0.15);
+}
+
+/* Alerts & Footer */
+.alert-error-custom {
+  background-color: var(--airasia-red-subtle);
+  border: 1px solid rgba(237, 28, 36, 0.3);
+  color: #991B1B;
+  border-radius: var(--radius-input);
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+}
+
 .app-footer {
   margin-top: auto;
   border-top: 1px solid var(--border-color);

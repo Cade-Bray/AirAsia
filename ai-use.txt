@@ -11,6 +11,8 @@ The prompt or prompts you used
 - Help me trouble shoot the error red not moving around the icon square as well.
 - Move the header and footer of the login page to all pages for conformity.
 - Add demo tag lines to each of the gift card sub sections.
+- Refactor the styles page to group shared resources to common functions. Reducing the overall
+    size of the css doc but keeping functionality.
 
 A brief explanation of how AI supported your work
 AI has supported me through the developement of this website by excelerating my developement 

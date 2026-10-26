@@ -167,6 +167,19 @@ body {
   border-color: transparent;
 }
 
+/* Danger / Delete Button */
+.btn-nav-danger {
+  border-color: rgba(237, 28, 36, 0.35);
+  color: #DC2626;
+  background-color: var(--bg-card);
+}
+
+.btn-nav-danger:hover {
+  border-color: var(--airasia-red);
+  background-color: var(--airasia-red-subtle);
+  color: #991B1B !important;
+}
+
 /* Primary AirAsia Button */
 .btn-airasia {
   background-color: var(--airasia-red);
@@ -363,8 +376,8 @@ body {
   border-bottom-right-radius: var(--radius-input) !important;
 }
 
-/* Input Focus & Error States (encompassing icon square) */
-.input-group:focus-within:not(:has(:invalid)):not(:has(.is-invalid)) {
+/* Input Focus State */
+.input-group:focus-within {
   box-shadow: var(--focus-ring-red);
 }
 
@@ -377,22 +390,29 @@ body {
   color: var(--airasia-red);
 }
 
-/* Error States with :is() selector consolidation */
-.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) {
+/* Error / Invalid State: only triggers when validated or marked invalid */
+.was-validated .input-group:has(.form-control:invalid),
+.input-group:has(.form-control.is-invalid),
+.input-group.is-invalid {
   box-shadow: none;
 }
 
-.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) .input-group-text {
+.was-validated .input-group:has(.form-control:invalid) .input-group-text,
+.input-group:has(.form-control.is-invalid) .input-group-text,
+.input-group.is-invalid .input-group-text {
   border-color: var(--airasia-red) !important;
   color: var(--airasia-red) !important;
   background-color: var(--bg-red-subtle) !important;
 }
 
-.input-group:is(:has(:invalid), :has(.is-invalid), .is-invalid) .form-control {
+.was-validated .input-group:has(.form-control:invalid) .form-control,
+.input-group:has(.form-control.is-invalid) .form-control,
+.input-group.is-invalid .form-control {
   border-color: var(--airasia-red) !important;
 }
 
-.input-group:is(:has(:invalid:focus), :has(.is-invalid:focus)) {
+.was-validated .input-group:has(.form-control:invalid:focus),
+.input-group:has(.form-control.is-invalid:focus) {
   box-shadow: var(--focus-ring-invalid) !important;
 }
 

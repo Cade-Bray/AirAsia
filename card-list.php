@@ -21,7 +21,6 @@
                 <a href="card-list.php" class="navbar-brand-framing" aria-label="AirAsia Home">
                     <img src="images/airasia_nobackground.jpg" alt="AirAsia Logo" class="brand-logo">
                     <div class="brand-text">
-                        <span class="brand-title">AirAsia</span>
                         <span class="brand-subtitle">Rewards Program</span>
                     </div>
                 </a>

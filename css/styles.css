@@ -19,3 +19,197 @@
   --success: #10B981;
   --success-bg: #D1FAE5;
 }
+
+/* Base Body Styles */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Navigation Bar with Left-Side Framing */
+.top-navbar {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  padding: 0.75rem 0;
+}
+
+/* Left-Side Framing Anchor */
+.navbar-brand-framing {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.35rem 0.85rem;
+  border-left: 4px solid var(--airasia-red);
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(254, 226, 226, 0.35) 0%, transparent 100%);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.navbar-brand-framing:hover {
+  background: linear-gradient(90deg, rgba(254, 226, 226, 0.6) 0%, transparent 100%);
+  text-decoration: none;
+}
+
+.brand-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Outer Content Frame (retaining wireframe layout structure) */
+.outer-frame {
+  background-color: rgba(254, 226, 226, 0.25);
+  border: 1px solid rgba(237, 28, 36, 0.15);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(237, 28, 36, 0.04);
+}
+
+@media (min-width: 768px) {
+  .outer-frame {
+    padding: 3.5rem 2.5rem;
+  }
+}
+
+/* Reactive Bootstrap Cards */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease;
+}
+
+/* Hover reactivity on Bootstrap cards */
+.card.card-reactive:hover,
+.card-reactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(237, 28, 36, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  border-color: rgba(237, 28, 36, 0.35);
+}
+
+.card:focus-within {
+  border-color: rgba(237, 28, 36, 0.5);
+}
+
+/* Card Header & Title */
+.card-title-header {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.card-subtitle-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Form Controls */
+.form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  border: 1.5px solid var(--border-color);
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background-color: #FFFFFF;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--airasia-red);
+  box-shadow: 0 0 0 0.25rem rgba(237, 28, 36, 0.15);
+}
+
+/* AirAsia Primary Button */
+.btn-airasia {
+  background-color: var(--airasia-red);
+  border: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.65rem;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-airasia:hover {
+  background-color: var(--airasia-red-hover);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(237, 28, 36, 0.3);
+}
+
+.btn-airasia:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(237, 28, 36, 0.2);
+}
+
+/* Links */
+.forgot-password-link {
+  color: var(--airasia-red);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+
+.forgot-password-link:hover {
+  color: var(--airasia-red-hover);
+  text-decoration: underline;
+}
+
+/* Alerts / Error message box */
+.alert-error-custom {
+  background-color: var(--airasia-red-subtle);
+  border: 1px solid rgba(237, 28, 36, 0.3);
+  color: #991B1B;
+  border-radius: 0.65rem;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Footer */
+.app-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  padding: 1.25rem 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+}

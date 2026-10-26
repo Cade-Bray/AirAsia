@@ -19,4 +19,6 @@ In addition, it's allowed me to generate assets for prototyping so understand th
 of the project better.
 
 One example of an AI suggestion you tested, changed, or rejected
-
+AI wanted to make AirAsia on the screen as text because it didn't have the context to know their
+name was displayed in the logo image. I had to continously fight it to keep off of the webpages as
+AI continued to reimplement it regardless of what I instructed it to do.

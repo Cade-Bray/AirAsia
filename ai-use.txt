@@ -5,6 +5,7 @@ The prompt or prompts you used
 - Generate some gift card assets in the images repository for me so that the prototyping feels more flushed out. You can reference the wireframes as needed.
 - Edit the airasia.jpg in the images to be airasia_nobackground.jpg and remove the white background.
 - Suggest a color pallete that compliments the AirAsia red.
+- Added the base HTML page data to each of the php pages such as doctype, html, head, body, meta tags. Use this tag for the cdn of the bootstrap we're using: <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
 - 
 
 A brief explanation of how AI supported your work

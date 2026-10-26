@@ -121,7 +121,7 @@
                 <a href="card-update.php" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
                     <i class="bi bi-pencil-square me-1"></i> CARD UPDATE
                 </a>
-                <a href="#" class="btn-nav-action px-4 py-2 fs-6 text-danger" id="btnDeleteCard">
+                <a href="#" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard">
                     <i class="bi bi-trash3 me-1"></i> DELETE CARD
                 </a>
             </div>

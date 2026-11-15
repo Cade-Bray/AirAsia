@@ -1,3 +1,5 @@
+HW2
+----
 The AI tool or tools used
 I've used Antigravity IDE with the Gemini Flash 3.8 on Medium context for the agent.
 
@@ -24,3 +26,31 @@ One example of an AI suggestion you tested, changed, or rejected
 AI wanted to make AirAsia on the screen as text because it didn't have the context to know their
 name was displayed in the logo image. I had to continously fight it to keep off of the webpages as
 AI continued to reimplement it regardless of what I instructed it to do.
+
+END OF HW2
+----
+
+HW3
+----
+The AI tool or tools used:
+I've used Antigravity IDE with the Gemini Flash 3.8 on High context for the agent.
+
+The prompt or prompts you used:
+
+-Seperate the header, footer, and navigation bar from the current pages and move them to their own 
+ php files within the includes. Use the file names "header.php", "footer.php", and "nav.php". Each 
+ of the pages you extract the this information from and replace with the templated version should use 
+ the "require_once" keyword. The header should contain the stylesheets link for all the other pages. 
+ Your shared footer should contain the common closing page content. Change the nav bar to include the 
+ home page, gift cards list, and gift cards add pages.
+
+-
+
+A brief explanation of how AI supported your work:
+
+One AI suggestion you tested, revised, or rejected:
+
+A brief explanation of how you verified the final code and database behavior:
+
+END OF HW3
+----

@@ -1,3 +1,9 @@
+<?php
+if (!ob_get_level()) {
+    ob_start();
+}
+require_once __DIR__ . '/db.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 

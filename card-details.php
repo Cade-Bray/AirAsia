@@ -122,7 +122,7 @@ $actualCardId = $card['cardId'];
                 <a href="card-update.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
                     <i class="bi bi-pencil-square me-1"></i> CARD UPDATE
                 </a>
-                <a href="card-delete.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard" onclick="return confirm('Are you sure you want to delete this card?');">
+                <a href="card-delete.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard">
                     <i class="bi bi-trash3 me-1"></i> DELETE CARD
                 </a>
             </div>

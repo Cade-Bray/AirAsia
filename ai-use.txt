@@ -37,18 +37,52 @@ I've used Antigravity IDE with the Gemini Flash 3.8 on High context for the agen
 
 The prompt or prompts you used:
 
--Seperate the header, footer, and navigation bar from the current pages and move them to their own 
+- Seperate the header, footer, and navigation bar from the current pages and move them to their own 
  php files within the includes. Use the file names "header.php", "footer.php", and "nav.php". Each 
  of the pages you extract the this information from and replace with the templated version should use 
  the "require_once" keyword. The header should contain the stylesheets link for all the other pages. 
  Your shared footer should contain the common closing page content. Change the nav bar to include the 
  home page, gift cards list, and gift cards add pages.
 
--
+- Using SQL syntax create the following tables with the specifications found in the requirements document.
+ Write the SQL script in the database files. This includes the following table configurations:
+
+User Table:
+- userId: int, size 11, Automatic incrimenting, not null, primary key constraint
+- userName: varchar, size 100
+- password: varchar, size 100
+- firstName: varchar, size 100
+- lastName: varchar, size 100
+
+Account table:
+- accountId: int, size 11, automatic incrimenting, primary key constraint
+- userId: int, size 11
+- accountType: varchar, size 100
+- points: int, size 50
+
+Redemption table:
+- redeemId: int, size 11, automatic incrimenting, primary key constraint
+- date: varchar, size 100
+- accountId: int, size 11
+- cardId: int, size 11
+- pointsRedeemed: int, size 50
+
+Gift card table:
+- cardId: int, size 11, automatic incrimenting, primary key constraint
+- cardName: varchar, size 100
+- cardType: varchar, size 100
+- cardvalue: float, size 10
+- points: int, size 50
+
+Double check the values I've given against the requirements doc.
 
 A brief explanation of how AI supported your work:
 
 One AI suggestion you tested, revised, or rejected:
+When running the generation for the SQL tables my agent generated it outside of the requirement
+document naming schema. I've rejected it's proposed naming schema in favor of the previously defined
+schema because when we're using naming conventions we normally perpetuate them throughout all of the system
+configurations. Having one out of the lockstep means that we're drifting from high readability standards.
 
 A brief explanation of how you verified the final code and database behavior:
 

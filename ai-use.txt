@@ -78,6 +78,9 @@ Double check the values I've given against the requirements doc.
 
 - Trace to understand all forms and url parameter locations within this project.
 
+- Generate image assets for each of the seeded card values. Utilize the seed.sql for details.
+Make each card without a value.
+
 A brief explanation of how AI supported your work:
 
 One AI suggestion you tested, revised, or rejected:

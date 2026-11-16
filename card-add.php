@@ -9,63 +9,27 @@ $cardType = '';
 $cardValueRaw = '';
 $pointsRaw = '';
 
-// Process form submission with PDO prepared statement
+// Process form submission with shared validation and PDO prepared statement
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $cardName = trim($_POST['cardName'] ?? '');
     $cardType = trim($_POST['cardType'] ?? '');
     $cardValueRaw = trim($_POST['cardValue'] ?? '');
     $pointsRaw = trim($_POST['points'] ?? '');
 
-    // Server-side validation
-    if ($cardName === '') {
-        $errors['cardName'] = 'Card Name is required.';
-    } elseif (strlen($cardName) > 100) {
-        $errors['cardName'] = 'Card Name cannot exceed 100 characters.';
-    }
-
-    $validTypes = [
-        'Travel', 'Shopping', 'Electronics', 'Food & Dining', 
-        'Food & Beverage', 'Transportation', 'Travel & Lodging', 
-        'Entertainment', 'Retail'
-    ];
-    if ($cardType === '') {
-        $errors['cardType'] = 'Please select a Card Type.';
-    } elseif (!in_array($cardType, $validTypes, true)) {
-        $errors['cardType'] = 'Invalid Card Type selected.';
-    }
-
-    if ($pointsRaw === '') {
-        $errors['points'] = 'Cost to redeem (Points Required) is required.';
-    } elseif (!filter_var($pointsRaw, FILTER_VALIDATE_INT) || (int)$pointsRaw < 1) {
-        $errors['points'] = 'Points must be a positive integer greater than 0.';
-    }
-
-    if ($cardValueRaw === '') {
-        $errors['cardValue'] = 'Card Value is required.';
-    } elseif (!is_numeric($cardValueRaw) || (float)$cardValueRaw <= 0) {
-        $errors['cardValue'] = 'Card Value must be a valid dollar amount greater than $0.00.';
-    }
-
-    // Optional image validation if an image was uploaded
-    if (isset($_FILES['cardImage']) && $_FILES['cardImage']['error'] !== UPLOAD_ERR_NO_FILE) {
-        if ($_FILES['cardImage']['error'] !== UPLOAD_ERR_OK) {
-            $errors['cardImage'] = 'Error uploading image. Please try again.';
-        } elseif ($_FILES['cardImage']['size'] > 5 * 1024 * 1024) {
-            $errors['cardImage'] = 'Gift card image must be 5MB or smaller.';
-        }
-    }
+    // Execute generalized validation logic
+    $validation = validateGiftCardData($_POST, $_FILES['cardImage'] ?? null);
+    $errors = $validation['errors'];
 
     // Insert with prepared statement when validation succeeds
     if (empty($errors)) {
-        $cardValue = (float)$cardValueRaw;
-        $points = (int)$pointsRaw;
+        $data = $validation['data'];
 
         $stmt = $pdo->prepare('INSERT INTO GiftCard (cardName, cardType, cardValue, points) VALUES (:cardName, :cardType, :cardValue, :points)');
         $stmt->execute([
-            ':cardName'  => $cardName,
-            ':cardType'  => $cardType,
-            ':cardValue' => $cardValue,
-            ':points'    => $points
+            ':cardName'  => $data['cardName'],
+            ':cardType'  => $data['cardType'],
+            ':cardValue' => $data['cardValue'],
+            ':points'    => $data['points']
         ]);
 
         if (ob_get_level() > 0) {
@@ -95,20 +59,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 </div>
             </div>
 
-            <!-- Server-Side Error Messages Alert -->
-            <?php if (!empty($errors)): ?>
-                <div class="alert alert-danger shadow-sm mb-4" role="alert">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i>
-                        <span class="fw-bold">Please correct the following errors:</span>
-                    </div>
-                    <ul class="mb-0 ps-3">
-                        <?php foreach ($errors as $error): ?>
-                            <li><?php echo htmlspecialchars($error); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endif; ?>
+            <!-- Server-Side Error Messages Alert (Rendered via shared helper) -->
+            <?php echo renderValidationAlert($errors); ?>
 
             <!-- Add Gift Card Form -->
             <form action="card-add.php" method="POST" id="addCardForm" enctype="multipart/form-data" novalidate>
@@ -125,13 +77,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                 <div class="mt-2">
                                     <label for="cardImage" class="form-label fw-semibold">Upload Image</label>
                                     <input type="file" 
-                                           class="form-control <?php echo isset($errors['cardImage']) ? 'is-invalid' : ''; ?>" 
+                                           class="form-control <?php echo getFieldValidationClass($errors, 'cardImage'); ?>" 
                                            id="cardImage" 
                                            name="cardImage" 
                                            accept="image/*">
-                                    <?php if (isset($errors['cardImage'])): ?>
-                                        <div class="invalid-feedback"><?php echo htmlspecialchars($errors['cardImage']); ?></div>
-                                    <?php endif; ?>
+                                    <?php echo renderFieldFeedback($errors, 'cardImage'); ?>
                                 </div>
                             </div>
                         </div>
@@ -145,41 +95,30 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                 <div class="mb-3">
                                     <label for="cardName" class="form-label">Card Name</label>
                                     <input type="text" 
-                                           class="form-control <?php echo isset($errors['cardName']) ? 'is-invalid' : ''; ?>" 
+                                           class="form-control <?php echo getFieldValidationClass($errors, 'cardName'); ?>" 
                                            id="cardName" 
                                            name="cardName" 
                                            value="<?php echo htmlspecialchars($cardName); ?>" 
                                            placeholder="e.g. AirAsia Flight Voucher" 
                                            required>
-                                    <?php if (isset($errors['cardName'])): ?>
-                                        <div class="invalid-feedback"><?php echo htmlspecialchars($errors['cardName']); ?></div>
-                                    <?php endif; ?>
+                                    <?php echo renderFieldFeedback($errors, 'cardName'); ?>
                                 </div>
 
                                 <!-- Card Type Field -->
                                 <div class="mb-3">
                                     <label for="cardType" class="form-label">Card Type</label>
-                                    <select class="form-select <?php echo isset($errors['cardType']) ? 'is-invalid' : ''; ?>" 
+                                    <select class="form-select <?php echo getFieldValidationClass($errors, 'cardType'); ?>" 
                                             id="cardType" 
                                             name="cardType" 
                                             required>
                                         <option value="" disabled <?php echo empty($cardType) ? 'selected' : ''; ?>>Select a card type...</option>
-                                        <?php 
-                                        $types = [
-                                            'Travel', 'Shopping', 'Electronics', 'Food & Dining', 
-                                            'Food & Beverage', 'Transportation', 'Travel & Lodging', 
-                                            'Entertainment', 'Retail'
-                                        ];
-                                        foreach ($types as $type): 
-                                        ?>
+                                        <?php foreach (getValidCardTypes() as $type): ?>
                                             <option value="<?php echo htmlspecialchars($type); ?>" <?php echo ($cardType === $type) ? 'selected' : ''; ?>>
                                                 <?php echo htmlspecialchars($type); ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <?php if (isset($errors['cardType'])): ?>
-                                        <div class="invalid-feedback"><?php echo htmlspecialchars($errors['cardType']); ?></div>
-                                    <?php endif; ?>
+                                    <?php echo renderFieldFeedback($errors, 'cardType'); ?>
                                 </div>
 
                                 <!-- Cost to Redeem / Points Field -->
@@ -190,16 +129,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                             <i class="bi bi-stars text-warning"></i>
                                         </span>
                                         <input type="number" 
-                                               class="form-control <?php echo isset($errors['points']) ? 'is-invalid' : ''; ?>" 
+                                               class="form-control <?php echo getFieldValidationClass($errors, 'points'); ?>" 
                                                id="points" 
                                                name="points" 
                                                value="<?php echo htmlspecialchars($pointsRaw); ?>" 
                                                placeholder="e.g. 1000" 
                                                min="1" 
                                                required>
-                                        <?php if (isset($errors['points'])): ?>
-                                            <div class="invalid-feedback"><?php echo htmlspecialchars($errors['points']); ?></div>
-                                        <?php endif; ?>
+                                        <?php echo renderFieldFeedback($errors, 'points'); ?>
                                     </div>
                                 </div>
 
@@ -210,16 +147,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                         <span class="input-group-text">$</span>
                                         <input type="number" 
                                                step="0.01" 
-                                               class="form-control <?php echo isset($errors['cardValue']) ? 'is-invalid' : ''; ?>" 
+                                               class="form-control <?php echo getFieldValidationClass($errors, 'cardValue'); ?>" 
                                                id="cardValue" 
                                                name="cardValue" 
                                                value="<?php echo htmlspecialchars($cardValueRaw); ?>" 
                                                placeholder="0.00" 
                                                min="0.01" 
                                                required>
-                                        <?php if (isset($errors['cardValue'])): ?>
-                                            <div class="invalid-feedback"><?php echo htmlspecialchars($errors['cardValue']); ?></div>
-                                        <?php endif; ?>
+                                        <?php echo renderFieldFeedback($errors, 'cardValue'); ?>
                                     </div>
                                 </div>
                             </div>

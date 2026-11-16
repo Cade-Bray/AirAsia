@@ -83,6 +83,8 @@ Make each card without a value.
 
 - Help me structure my test harness page to promote readability and easily visible pass/fail.
 
+- Build out the test-report.md from the template I've start and the table I've used for each test case.
+
 A brief explanation of how AI supported your work:
 
 One AI suggestion you tested, revised, or rejected:

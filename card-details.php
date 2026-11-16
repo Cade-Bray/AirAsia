@@ -3,24 +3,37 @@ $pageTitle = 'Gift Card Details - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
 
-// Use prepared statement to fetch card using URL parameter
-$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT) ?? 1;
+// Validate cardId parameter (matching SQL schema column name)
+$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT);
 
+if (!$cardId) {
+    if (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    header('Location: card-list.php');
+    exit;
+}
+
+// Fetch card using prepared statement
 $stmt = $pdo->prepare('SELECT * FROM GiftCard WHERE cardId = :cardId');
 $stmt->execute([':cardId' => $cardId]);
 $card = $stmt->fetch();
 
 if (!$card) {
-    // Fallback to first available card if cardId not found
-    $card = $pdo->query('SELECT * FROM GiftCard ORDER BY cardId ASC LIMIT 1')->fetch();
+    // Fail on non-existent card by redirecting to main page
+    if (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    header('Location: card-list.php');
+    exit;
 }
 
-$cardName = $card ? $card['cardName'] : 'Gift Card';
-$cardType = $card ? $card['cardType'] : 'General';
-$cardValue = $card ? (float)$card['cardValue'] : 0.0;
-$points = $card ? (int)$card['points'] : 0;
+$cardName = $card['cardName'];
+$cardType = $card['cardType'];
+$cardValue = (float)$card['cardValue'];
+$points = (int)$card['points'];
 $cardImage = getCardImage($cardName);
-$actualCardId = $card ? $card['cardId'] : 1;
+$actualCardId = $card['cardId'];
 ?>
 
     <!-- Main Content Area: General Wireframe Structure -->

@@ -1,52 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Available Gift Cards - AirAsia Rewards</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
-    <!-- Top Navigation Bar with Left-Side Framing & Right-Side Actions -->
-    <header class="top-navbar">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg p-0">
-                <a href="card-list.php" class="navbar-brand-framing" aria-label="AirAsia Home">
-                    <img src="images/airasia_nobackground.jpg" alt="AirAsia Logo" class="brand-logo">
-                    <div class="brand-text">
-                        <span class="brand-subtitle">Rewards Program</span>
-                    </div>
-                </a>
-
-                <!-- Nav Actions matching wireframe (Welcome message, Add a Card, Add a Customer, Log Out) -->
-                <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 gap-md-3 ms-auto mt-2 mt-md-0">
-                    <span class="nav-user-greeting d-none d-sm-inline-flex">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Welcome, <span class="nav-user-name">Member</span></span>
-                    </span>
-                    <a href="card-add.php" class="btn-nav-action btn-nav-admin" id="navAddCard" title="Administrative: Add a new gift card">
-                        <i class="bi bi-plus-circle-fill"></i>
-                        <span>ADD A CARD</span>
-                    </a>
-                    <a href="#" class="btn-nav-action" id="navAddCustomer" title="Add a customer">
-                        <i class="bi bi-person-plus"></i>
-                        <span>ADD A CUSTOMER</span>
-                    </a>
-                    <a href="login.php" class="btn-nav-logout" id="navLogout" title="Log out of system">
-                        <i class="bi bi-box-arrow-right me-1"></i>
-                        <span>LOG OUT</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
+<?php
+$pageTitle = 'Available Gift Cards - AirAsia Rewards';
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
+?>
 
     <!-- Main Content Area: Wireframe Structure -->
     <main class="container py-4 py-md-5">
@@ -214,12 +170,6 @@
         </div>
     </main>
 
-    <!-- Footer matching wireframe -->
-    <footer class="app-footer">
-        <div class="container">
-            <p class="mb-0">&copy; Air Asia Rewards Program. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+<?php
+require_once 'includes/footer.php';
+?>

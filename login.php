@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - AirAsia Rewards</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
-    <!-- Top Navigation Bar with Left-Side Framing -->
-    <header class="top-navbar">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg p-0">
-                <a href="login.php" class="navbar-brand-framing" aria-label="AirAsia Home">
-                    <img src="images/airasia_nobackground.jpg" alt="AirAsia Logo" class="brand-logo">
-                    <div class="brand-text">
-                        <span class="brand-subtitle">Rewards Program</span>
-                    </div>
-                </a>
-            </nav>
-        </div>
-    </header>
+<?php
+$pageTitle = 'Login - AirAsia Rewards';
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
+?>
 
     <!-- Main Content Area: General Wireframe Structure -->
     <main class="container my-auto py-5">
@@ -94,12 +70,6 @@
         </div>
     </main>
 
-    <!-- Footer matching wireframe -->
-    <footer class="app-footer">
-        <div class="container">
-            <p class="mb-0">&copy; Air Asia Rewards Program. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+<?php
+require_once 'includes/footer.php';
+?>

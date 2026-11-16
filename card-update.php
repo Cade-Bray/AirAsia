@@ -2,6 +2,49 @@
 $pageTitle = 'Update Gift Card - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
+
+// Process update submission with PDO prepared statement
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+    $cardId = filter_input(INPUT_POST, 'cardId', FILTER_VALIDATE_INT);
+    $cardName = trim($_POST['cardName'] ?? '');
+    $cardType = trim($_POST['cardType'] ?? '');
+    $cardValue = filter_input(INPUT_POST, 'cardValue', FILTER_VALIDATE_FLOAT) ?: 0.0;
+    $points = filter_input(INPUT_POST, 'points', FILTER_VALIDATE_INT) ?: 0;
+
+    if ($cardId && !empty($cardName) && !empty($cardType)) {
+        $stmt = $pdo->prepare('UPDATE GiftCard SET cardName = :cardName, cardType = :cardType, cardValue = :cardValue, points = :points WHERE cardId = :cardId');
+        $stmt->execute([
+            ':cardName'  => $cardName,
+            ':cardType'  => $cardType,
+            ':cardValue' => $cardValue,
+            ':points'    => $points,
+            ':cardId'    => $cardId
+        ]);
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        header('Location: card-list.php');
+        exit;
+    }
+}
+
+// Fetch existing card using prepared statement receiving value from URL parameter
+$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT) ?? 1;
+$stmt = $pdo->prepare('SELECT * FROM GiftCard WHERE cardId = :cardId');
+$stmt->execute([':cardId' => $cardId]);
+$card = $stmt->fetch();
+
+if (!$card) {
+    // Fallback to first available card if not found
+    $card = $pdo->query('SELECT * FROM GiftCard ORDER BY cardId ASC LIMIT 1')->fetch();
+}
+
+$cardName = $card ? $card['cardName'] : '';
+$cardType = $card ? $card['cardType'] : '';
+$cardValue = $card ? (float)$card['cardValue'] : 0.0;
+$points = $card ? (int)$card['points'] : 0;
+$actualCardId = $card ? $card['cardId'] : 1;
+$cardImage = getCardImage($cardName);
 ?>
 
     <!-- Main Content Area: General Wireframe Structure -->
@@ -10,7 +53,7 @@ require_once 'includes/nav.php';
         <div class="outer-frame">
             <!-- Top Controls Row -->
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <a href="card-details.php" class="btn btn-outline-secondary btn-sm" id="btnGoBack">
+                <a href="card-details.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn btn-outline-secondary btn-sm" id="btnGoBack">
                     <i class="bi bi-arrow-left me-1"></i> GO BACK
                 </a>
             </div>
@@ -23,14 +66,16 @@ require_once 'includes/nav.php';
             </div>
 
             <!-- Update Gift Card Form -->
-            <form action="card-list.php" method="POST" id="updateCardForm" enctype="multipart/form-data">
+            <form action="card-update.php" method="POST" id="updateCardForm" enctype="multipart/form-data">
+                <input type="hidden" name="cardId" value="<?php echo htmlspecialchars($actualCardId); ?>">
+
                 <div class="row g-4 justify-content-center align-items-stretch">
                     <!-- Left Column: [[GIFT CARD IMAGE]] & Upload Image -->
                     <div class="col-12 col-md-5 col-lg-5">
                         <div class="card card-reactive h-100">
                             <div class="card-body d-flex flex-column justify-content-center p-4">
                                 <div class="mb-3 text-center">
-                                    <img src="images/card-apple.jpg" class="img-fluid rounded shadow-sm mb-2" alt="Current Apple Gift Card Image" style="max-height: 200px; width: 100%; object-fit: cover;">
+                                    <img src="<?php echo htmlspecialchars($cardImage); ?>" class="img-fluid rounded shadow-sm mb-2" alt="<?php echo htmlspecialchars($cardName); ?>" style="max-height: 200px; width: 100%; object-fit: cover;">
                                     <span class="text-muted small d-block">Current Card Image</span>
                                 </div>
                                 <div class="mt-2">
@@ -52,7 +97,7 @@ require_once 'includes/nav.php';
                                            class="form-control" 
                                            id="cardName" 
                                            name="cardName" 
-                                           value="Apple Gift Card" 
+                                           value="<?php echo htmlspecialchars($cardName); ?>" 
                                            required>
                                 </div>
 
@@ -60,11 +105,14 @@ require_once 'includes/nav.php';
                                 <div class="mb-3">
                                     <label for="cardType" class="form-label">Card Type</label>
                                     <select class="form-select" id="cardType" name="cardType" required>
-                                        <option value="Flight Voucher">Flight Voucher</option>
-                                        <option value="Retail" selected>Retail</option>
-                                        <option value="Food & Dining">Food & Dining</option>
-                                        <option value="Hotel & Travel">Hotel & Travel</option>
-                                        <option value="Entertainment">Entertainment</option>
+                                        <?php 
+                                        $types = ['Travel', 'Shopping', 'Electronics', 'Food & Dining', 'Food & Beverage', 'Transportation', 'Travel & Lodging', 'Entertainment', 'Retail'];
+                                        foreach ($types as $type): 
+                                        ?>
+                                            <option value="<?php echo $type; ?>" <?php echo ($cardType === $type) ? 'selected' : ''; ?>>
+                                                <?php echo $type; ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
@@ -79,7 +127,7 @@ require_once 'includes/nav.php';
                                                class="form-control" 
                                                id="points" 
                                                name="points" 
-                                               value="2500" 
+                                               value="<?php echo htmlspecialchars($points); ?>" 
                                                min="1" 
                                                required>
                                     </div>
@@ -95,7 +143,7 @@ require_once 'includes/nav.php';
                                                class="form-control" 
                                                id="cardValue" 
                                                name="cardValue" 
-                                               value="25.00" 
+                                               value="<?php echo htmlspecialchars(number_format($cardValue, 2, '.', '')); ?>" 
                                                min="0" 
                                                required>
                                     </div>
@@ -110,7 +158,7 @@ require_once 'includes/nav.php';
                     <button type="submit" class="btn btn-airasia px-4 py-2 fs-6" id="btnUpdateCard">
                         UPDATE CARD
                     </button>
-                    <a href="card-details.php" class="btn btn-outline-secondary px-4 py-2 fs-6" id="btnCancel">
+                    <a href="card-details.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn btn-outline-secondary px-4 py-2 fs-6" id="btnCancel">
                         CANCEL
                     </a>
                 </div>

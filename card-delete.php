@@ -2,7 +2,8 @@
 require_once 'includes/db.php';
 
 // Fetch cardId from URL parameter
-$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT);
+$rawCardId = $_GET['cardId'] ?? null;
+$cardId = filter_var($rawCardId, FILTER_VALIDATE_INT) ?: null;
 
 if ($cardId) {
     // Delete card using PDO prepared statement

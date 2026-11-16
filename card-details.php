@@ -4,7 +4,8 @@ require_once 'includes/header.php';
 require_once 'includes/nav.php';
 
 // Validate cardId parameter (matching SQL schema column name)
-$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT);
+$rawCardId = $_GET['cardId'] ?? null;
+$cardId = filter_var($rawCardId, FILTER_VALIDATE_INT) ?: null;
 
 if (!$cardId) {
     if (ob_get_level() > 0) {
@@ -40,6 +41,17 @@ $actualCardId = $card['cardId'];
     <main class="container py-4 py-md-5 my-auto">
         <!-- Outer Frame Wrapper -->
         <div class="outer-frame">
+            <!-- Update Success Alert Banner -->
+            <?php if (!empty($_GET['updated'])): ?>
+                <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill fs-5 me-2"></i>
+                        <span><strong>Success!</strong> Gift card details have been updated successfully.</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
             <!-- Top Controls Row (Go Back link matching wireframe) -->
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <a href="card-list.php" class="btn btn-outline-secondary btn-sm" id="btnGoBack">

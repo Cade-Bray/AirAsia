@@ -1,35 +1,3 @@
-HW2
-----
-The AI tool or tools used
-I've used Antigravity IDE with the Gemini Flash 3.8 on Medium context for the agent.
-
-The prompt or prompts you used
-- Generate some gift card assets in the images repository for me so that the prototyping feels more flushed out. You can reference the wireframes as needed.
-- Edit the airasia.jpg in the images to be airasia_nobackground.jpg and remove the white background.
-- Suggest a color pallete that compliments the AirAsia red.
-- Added the base HTML page data to each of the php pages such as doctype, html, head, body, meta tags. Use this tag for the cdn of the bootstrap we're using: <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
-- Show me an example of making a card reactive in bootstrap when I hover over it.
-- Show me how to make a gradiate with the light read pallete for the Air Asia Logo.
-- Help me trouble shoot the error red not moving around the icon square as well.
-- Move the header and footer of the login page to all pages for conformity.
-- Add demo tag lines to each of the gift card sub sections.
-- Refactor the styles page to group shared resources to common functions. Reducing the overall
-    size of the css doc but keeping functionality.
-
-A brief explanation of how AI supported your work
-AI has supported me through the developement of this website by excelerating my developement 
-velocity. It's allowed me to rapid prototype and sort through developement documentation quickly.
-In addition, it's allowed me to generate assets for prototyping so understand the final version
-of the project better.
-
-One example of an AI suggestion you tested, changed, or rejected
-AI wanted to make AirAsia on the screen as text because it didn't have the context to know their
-name was displayed in the logo image. I had to continously fight it to keep off of the webpages as
-AI continued to reimplement it regardless of what I instructed it to do.
-
-END OF HW2
-----
-
 HW3
 ----
 The AI tool or tools used:
@@ -86,6 +54,9 @@ Make each card without a value.
 - Build out the test-report.md from the template I've start and the table I've used for each test case.
 
 A brief explanation of how AI supported your work:
+I was able to lean heavily on my AI tooling for quickly expanding templated documentation,
+keep page conformity, suggest edge case testing, help with testing harness troubleshooting, and more.
+The tooling overall increased my developement velocity and I was able to make impactful changes quicker.
 
 One AI suggestion you tested, revised, or rejected:
 When running the generation for the SQL tables my agent generated it outside of the requirement
@@ -94,6 +65,10 @@ schema because when we're using naming conventions we normally perpetuate them t
 configurations. Having one out of the lockstep means that we're drifting from high readability standards.
 
 A brief explanation of how you verified the final code and database behavior:
+I had AI generate a test-harness and suggest edge cases. I proceeded to add test-cases that were defined in
+the requirements. Some of which were already generated for me by the AI tooling from context.
+I verified the functionality of the testing harness by performing the same tests manually to ensure that systems
+produced the same result.
 
 END OF HW3
 ----

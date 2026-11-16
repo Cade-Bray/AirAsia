@@ -1,7 +1,26 @@
 <?php
-$pageTitle = 'Apple Gift Card Details - AirAsia Rewards';
+$pageTitle = 'Gift Card Details - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
+
+// Use prepared statement to fetch card using URL parameter
+$cardId = filter_input(INPUT_GET, 'cardId', FILTER_VALIDATE_INT) ?? 1;
+
+$stmt = $pdo->prepare('SELECT * FROM GiftCard WHERE cardId = :cardId');
+$stmt->execute([':cardId' => $cardId]);
+$card = $stmt->fetch();
+
+if (!$card) {
+    // Fallback to first available card if cardId not found
+    $card = $pdo->query('SELECT * FROM GiftCard ORDER BY cardId ASC LIMIT 1')->fetch();
+}
+
+$cardName = $card ? $card['cardName'] : 'Gift Card';
+$cardType = $card ? $card['cardType'] : 'General';
+$cardValue = $card ? (float)$card['cardValue'] : 0.0;
+$points = $card ? (int)$card['points'] : 0;
+$cardImage = getCardImage($cardName);
+$actualCardId = $card ? $card['cardId'] : 1;
 ?>
 
     <!-- Main Content Area: General Wireframe Structure -->
@@ -18,7 +37,7 @@ require_once 'includes/nav.php';
             <!-- Centered Header Box: [[GIFT CARD NAME]] DETAILS -->
             <div class="text-center mb-4 mb-md-5">
                 <div class="page-header-box">
-                    <h1 class="page-header-title">Apple Gift Card Details</h1>
+                    <h1 class="page-header-title"><?php echo htmlspecialchars($cardName); ?> Details</h1>
                 </div>
             </div>
 
@@ -28,7 +47,7 @@ require_once 'includes/nav.php';
                 <div class="col-12 col-md-5 col-lg-5">
                     <div class="card card-reactive h-100 overflow-hidden">
                         <div class="p-3 text-center bg-light">
-                            <img src="images/card-apple.jpg" class="img-fluid rounded shadow-sm detail-card-img" alt="Apple Gift Card">
+                            <img src="<?php echo htmlspecialchars($cardImage); ?>" class="img-fluid rounded shadow-sm detail-card-img" alt="<?php echo htmlspecialchars($cardName); ?>">
                         </div>
                         <div class="card-body d-flex flex-column justify-content-center p-4">
                             <button type="button" class="btn btn-airasia w-100 py-2 fs-5" id="btnRedeem">
@@ -43,23 +62,23 @@ require_once 'includes/nav.php';
                     <div class="card card-reactive h-100">
                         <div class="card-body p-4 p-md-5 d-flex flex-column justify-content-between">
                             <div>
-                                <h2 class="card-title h3 fw-bold text-dark mb-2">Apple Gift Card</h2>
-                                <p class="text-muted mb-4">Redeem for products, accessories, apps, games, music, and iCloud.</p>
+                                <h2 class="card-title h3 fw-bold text-dark mb-2"><?php echo htmlspecialchars($cardName); ?></h2>
+                                <p class="text-muted mb-4"><?php echo htmlspecialchars($cardType); ?> &bull; Available for redemption through AirAsia Rewards.</p>
 
                                 <div class="list-group list-group-flush border-top border-bottom my-3">
                                     <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0">
                                         <span class="text-muted fw-semibold">CARD TYPE:</span>
-                                        <span class="fw-bold text-dark">Digital / Retail</span>
+                                        <span class="fw-bold text-dark"><?php echo htmlspecialchars($cardType); ?></span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0">
                                         <span class="text-muted fw-semibold">CARD VALUE:</span>
-                                        <span class="fw-bold text-dark fs-5">$25.00</span>
+                                        <span class="fw-bold text-dark fs-5">$<?php echo number_format($cardValue, 2); ?></span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0">
                                         <span class="text-muted fw-semibold">COST TO REDEEM:</span>
                                         <span class="points-badge">
                                             <i class="bi bi-stars"></i>
-                                            <span>2,500 points</span>
+                                            <span><?php echo number_format($points); ?> points</span>
                                         </span>
                                     </div>
                                 </div>
@@ -75,10 +94,10 @@ require_once 'includes/nav.php';
 
             <!-- Administrative Action Links Row (Wireframe: CARD UPDATE & DELETE CARD) -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mt-5 pt-3">
-                <a href="card-update.php" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
+                <a href="card-update.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
                     <i class="bi bi-pencil-square me-1"></i> CARD UPDATE
                 </a>
-                <a href="#" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard">
+                <a href="card-delete.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard" onclick="return confirm('Are you sure you want to delete this card?');">
                     <i class="bi bi-trash3 me-1"></i> DELETE CARD
                 </a>
             </div>

@@ -2,6 +2,29 @@
 $pageTitle = 'Add Gift Card - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
+
+// Process form submission with PDO prepared statement
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+    $cardName = trim($_POST['cardName'] ?? '');
+    $cardType = trim($_POST['cardType'] ?? '');
+    $cardValue = filter_input(INPUT_POST, 'cardValue', FILTER_VALIDATE_FLOAT) ?: 0.0;
+    $points = filter_input(INPUT_POST, 'points', FILTER_VALIDATE_INT) ?: 0;
+
+    if (!empty($cardName) && !empty($cardType)) {
+        $stmt = $pdo->prepare('INSERT INTO GiftCard (cardName, cardType, cardValue, points) VALUES (:cardName, :cardType, :cardValue, :points)');
+        $stmt->execute([
+            ':cardName'  => $cardName,
+            ':cardType'  => $cardType,
+            ':cardValue' => $cardValue,
+            ':points'    => $points
+        ]);
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        header('Location: card-list.php');
+        exit;
+    }
+}
 ?>
 
     <!-- Main Content Area: General Wireframe Structure -->
@@ -23,7 +46,7 @@ require_once 'includes/nav.php';
             </div>
 
             <!-- Add Gift Card Form -->
-            <form action="card-list.php" method="POST" id="addCardForm" enctype="multipart/form-data">
+            <form action="card-add.php" method="POST" id="addCardForm" enctype="multipart/form-data">
                 <div class="row g-4 justify-content-center align-items-stretch">
                     <!-- Left Column: [[GIFT CARD IMAGE]] & Upload Image -->
                     <div class="col-12 col-md-5 col-lg-5">
@@ -62,11 +85,15 @@ require_once 'includes/nav.php';
                                     <label for="cardType" class="form-label">Card Type</label>
                                     <select class="form-select" id="cardType" name="cardType" required>
                                         <option value="" selected disabled>Select a card type...</option>
-                                        <option value="Flight Voucher">Flight Voucher</option>
-                                        <option value="Retail">Retail</option>
+                                        <option value="Travel">Travel</option>
+                                        <option value="Shopping">Shopping</option>
+                                        <option value="Electronics">Electronics</option>
                                         <option value="Food & Dining">Food & Dining</option>
-                                        <option value="Hotel & Travel">Hotel & Travel</option>
+                                        <option value="Food & Beverage">Food & Beverage</option>
+                                        <option value="Transportation">Transportation</option>
+                                        <option value="Travel & Lodging">Travel & Lodging</option>
                                         <option value="Entertainment">Entertainment</option>
+                                        <option value="Retail">Retail</option>
                                     </select>
                                 </div>
 

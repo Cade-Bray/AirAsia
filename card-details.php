@@ -119,10 +119,10 @@ $actualCardId = $card['cardId'];
 
             <!-- Administrative Action Links Row (Wireframe: CARD UPDATE & DELETE CARD) -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mt-5 pt-3">
-                <a href="card-update.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
+                <a href="card-update.php?card_id=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn-nav-action btn-nav-admin px-4 py-2 fs-6" id="btnCardUpdate">
                     <i class="bi bi-pencil-square me-1"></i> CARD UPDATE
                 </a>
-                <a href="card-delete.php?cardId=<?php echo htmlspecialchars($actualCardId); ?>" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard">
+                <a href="card-delete.php?card_id=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn-nav-action btn-nav-danger px-4 py-2 fs-6" id="btnDeleteCard">
                     <i class="bi bi-trash3 me-1"></i> DELETE CARD
                 </a>
             </div>

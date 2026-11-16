@@ -33,12 +33,12 @@ sortCardsByVendorAndValue($cards);
                     <?php foreach ($cards as $card): ?>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card card-reactive gift-card h-100">
-                                <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="card-img-link" aria-label="View <?php echo htmlspecialchars($card['cardName']); ?> details">
+                                <a href="card-details.php?card_id=<?php echo htmlspecialchars((string)$card['cardId']); ?>" class="card-img-link" aria-label="View <?php echo htmlspecialchars($card['cardName']); ?> details">
                                     <img src="<?php echo htmlspecialchars(getCardImage($card['cardName'])); ?>" class="gift-card-img" alt="<?php echo htmlspecialchars($card['cardName']); ?>">
                                 </a>
                                 <div class="card-body d-flex flex-column p-4">
                                     <h2 class="h5 mb-2">
-                                        <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="gift-card-title-link">
+                                        <a href="card-details.php?card_id=<?php echo htmlspecialchars((string)$card['cardId']); ?>" class="gift-card-title-link">
                                             <?php echo htmlspecialchars($card['cardName']); ?>
                                         </a>
                                     </h2>
@@ -48,7 +48,7 @@ sortCardsByVendorAndValue($cards);
                                             <i class="bi bi-stars"></i>
                                             <span><?php echo number_format($card['points']); ?> points</span>
                                         </span>
-                                        <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="btn-outline-airasia">
+                                        <a href="card-details.php?card_id=<?php echo htmlspecialchars((string)$card['cardId']); ?>" class="btn-outline-airasia">
                                             <span>Redeem</span>
                                             <i class="bi bi-chevron-right"></i>
                                         </a>

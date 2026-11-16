@@ -66,7 +66,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             ob_end_clean();
         }
         // Redirect to card-details page to display updated information with success alert
-        header('Location: card-details.php?cardId=' . $cardId . '&updated=1');
+        header('Location: card-details.php?card_id=' . $cardId . '&updated=1');
         exit;
     }
 }
@@ -80,7 +80,7 @@ $cardImage = getCardImage($cardName);
         <div class="outer-frame">
             <!-- Top Controls Row -->
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <a href="card-details.php?cardId=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn btn-outline-secondary btn-sm" id="btnGoBack">
+                <a href="card-details.php?card_id=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn btn-outline-secondary btn-sm" id="btnGoBack">
                     <i class="bi bi-arrow-left me-1"></i> GO BACK
                 </a>
             </div>
@@ -197,7 +197,7 @@ $cardImage = getCardImage($cardName);
                     <button type="submit" class="btn btn-airasia px-4 py-2 fs-6" id="btnUpdateCard">
                         UPDATE CARD
                     </button>
-                    <a href="card-details.php?cardId=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn btn-outline-secondary px-4 py-2 fs-6" id="btnCancel">
+                    <a href="card-details.php?card_id=<?php echo htmlspecialchars((string)$actualCardId); ?>" class="btn btn-outline-secondary px-4 py-2 fs-6" id="btnCancel">
                         CANCEL
                     </a>
                 </div>

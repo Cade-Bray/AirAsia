@@ -2,6 +2,18 @@
 $pageTitle = 'Available Gift Cards - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
+
+// Cards sorted to group like vendors together and sub-sorted by value (lowest -> highest)
+$cardType = filter_input(INPUT_GET, 'cardType', FILTER_DEFAULT);
+if (!empty($cardType)) {
+    $stmt = $pdo->prepare('SELECT * FROM GiftCard WHERE cardType = :cardType ORDER BY card_vendor(cardName) ASC, cardValue ASC, points ASC');
+    $stmt->execute([':cardType' => $cardType]);
+    $cards = $stmt->fetchAll();
+} else {
+    $stmt = $pdo->query('SELECT * FROM GiftCard ORDER BY card_vendor(cardName) ASC, cardValue ASC, points ASC');
+    $cards = $stmt->fetchAll();
+}
+sortCardsByVendorAndValue($cards);
 ?>
 
     <!-- Main Content Area: Wireframe Structure -->
@@ -17,155 +29,40 @@ require_once 'includes/nav.php';
 
             <!-- Gift Cards Grid -->
             <div class="row g-4">
-                <!-- Card 1: AirAsia Flight Voucher -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View AirAsia Flight Voucher details">
-                            <img src="images/card-airasia.jpg" class="gift-card-img" alt="AirAsia Flight Voucher">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">AirAsia Flight Voucher</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Redeemable for all AirAsia domestic and international flights.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>5,000 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
+                <?php if (!empty($cards)): ?>
+                    <?php foreach ($cards as $card): ?>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card card-reactive gift-card h-100">
+                                <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="card-img-link" aria-label="View <?php echo htmlspecialchars($card['cardName']); ?> details">
+                                    <img src="<?php echo htmlspecialchars(getCardImage($card['cardName'])); ?>" class="gift-card-img" alt="<?php echo htmlspecialchars($card['cardName']); ?>">
                                 </a>
+                                <div class="card-body d-flex flex-column p-4">
+                                    <h2 class="h5 mb-2">
+                                        <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="gift-card-title-link">
+                                            <?php echo htmlspecialchars($card['cardName']); ?>
+                                        </a>
+                                    </h2>
+                                    <p class="text-muted small mb-3"><?php echo htmlspecialchars($card['cardType']); ?> &bull; Value: $<?php echo number_format($card['cardValue'], 2); ?></p>
+                                    <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
+                                        <span class="points-badge">
+                                            <i class="bi bi-stars"></i>
+                                            <span><?php echo number_format($card['points']); ?> points</span>
+                                        </span>
+                                        <a href="card-details.php?cardId=<?php echo htmlspecialchars($card['cardId']); ?>" class="btn-outline-airasia">
+                                            <span>Redeem</span>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted fs-5">No gift cards are currently available.</p>
+                        <a href="card-add.php" class="btn btn-airasia">Add a New Gift Card</a>
                     </div>
-                </div>
-
-                <!-- Card 2: Amazon Gift Card -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View Amazon Gift Card details">
-                            <img src="images/card-amazon.jpg" class="gift-card-img" alt="Amazon Gift Card">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">Amazon Gift Card</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Shop millions of items with digital Amazon shopping balance.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>2,500 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Apple Store Gift Card -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View Apple Gift Card details">
-                            <img src="images/card-apple.jpg" class="gift-card-img" alt="Apple Gift Card">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">Apple Gift Card</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Redeem for products, accessories, apps, games, music, and iCloud.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>2,500 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Grab Rides & Food -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View Grab Voucher details">
-                            <img src="images/card-grab.jpg" class="gift-card-img" alt="Grab Rides & Food">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">Grab Rides & Food</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Convenient transport and doorstep meal delivery across Southeast Asia.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>1,000 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5: Luxury Hotel Stay -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View Luxury Hotel Stay details">
-                            <img src="images/card-hotel.jpg" class="gift-card-img" alt="Luxury Hotel Stay">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">Luxury Hotel Stay</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Redeemable towards top partner resorts and boutique hotels worldwide.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>10,000 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6: Starbucks Coffee -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-reactive gift-card h-100">
-                        <a href="card-details.php" class="card-img-link" aria-label="View Starbucks Gift Card details">
-                            <img src="images/card-starbucks.jpg" class="gift-card-img" alt="Starbucks Gift Card">
-                        </a>
-                        <div class="card-body d-flex flex-column p-4">
-                            <h2 class="h5 mb-2">
-                                <a href="card-details.php" class="gift-card-title-link">Starbucks Coffee Card</a>
-                            </h2>
-                            <p class="text-muted small mb-3">Enjoy handcrafted beverages, fresh brewed roasts, and tasty treats.</p>
-                            <div class="mt-auto d-flex align-items-center justify-content-between pt-2">
-                                <span class="points-badge">
-                                    <i class="bi bi-stars"></i>
-                                    <span>1,000 points</span>
-                                </span>
-                                <a href="card-details.php" class="btn-outline-airasia">
-                                    <span>Redeem</span>
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>

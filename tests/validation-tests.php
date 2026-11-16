@@ -294,7 +294,7 @@ $allPassed = ($failCount === 0);
                 <a href="../card-list.php" class="btn btn-outline-secondary btn-sm" id="btnReturnList">
                     <i class="bi bi-arrow-left me-1"></i> Return to Gift Card List
                 </a>
-                <span class="badge bg-light text-dark border">Part 6 Test Harness</span>
+                <span class="badge bg-light text-dark border">Test Suite</span>
             </div>
 
             <!-- Header Box -->
@@ -330,11 +330,11 @@ $allPassed = ($failCount === 0);
                 </div>
             <?php endif; ?>
 
-            <!-- Core Required Tests (Part 6 Specification) -->
+            <!-- Core Required Tests -->
             <div class="card shadow-sm mb-4 border-0">
                 <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between py-3">
                     <h2 class="h5 mb-0 fw-bold">
-                        <i class="bi bi-shield-check me-2 text-warning"></i> Required Validation Tests (Part 6)
+                        <i class="bi bi-shield-check me-2 text-warning"></i> Core Validation Tests
                     </h2>
                     <span class="badge bg-warning text-dark fw-bold">5 Core Tests</span>
                 </div>

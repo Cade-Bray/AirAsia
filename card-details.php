@@ -3,8 +3,8 @@ $pageTitle = 'Gift Card Details - AirAsia Rewards';
 require_once 'includes/header.php';
 require_once 'includes/nav.php';
 
-// Validate cardId parameter (matching SQL schema column name)
-$rawCardId = $_GET['cardId'] ?? null;
+// Validate cardId parameter (supports both schema name cardId and query parameter card_id)
+$rawCardId = $_GET['cardId'] ?? $_GET['card_id'] ?? null;
 $cardId = filter_var($rawCardId, FILTER_VALIDATE_INT) ?: null;
 
 if (!$cardId) {

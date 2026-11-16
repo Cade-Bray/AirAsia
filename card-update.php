@@ -5,8 +5,8 @@ require_once 'includes/nav.php';
 
 $errors = [];
 
-// Specific to update: validate and retrieve target cardId
-$rawCardId = $_POST['cardId'] ?? $_GET['cardId'] ?? null;
+// Specific to update: validate and retrieve target cardId (supports cardId and card_id)
+$rawCardId = $_POST['cardId'] ?? $_GET['cardId'] ?? $_POST['card_id'] ?? $_GET['card_id'] ?? null;
 $cardId = filter_var($rawCardId, FILTER_VALIDATE_INT) ?: null;
 
 if (!$cardId) {

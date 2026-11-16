@@ -24,9 +24,89 @@ if (!function_exists('getValidCardTypes')) {
     }
 }
 
+if (!function_exists('validateCardId')) {
+    /**
+     * Validates that a Gift Card identifier is a valid positive integer.
+     *
+     * @param mixed $id Raw input from $_GET or $_POST
+     * @return int|null Valid integer ID, or null if invalid/missing
+     */
+    function validateCardId($id): ?int {
+        if ($id === null || $id === '') {
+            return null;
+        }
+        $filtered = filter_var($id, FILTER_VALIDATE_INT);
+        return ($filtered !== false && $filtered > 0) ? (int)$filtered : null;
+    }
+}
+
+if (!function_exists('validateCardName')) {
+    /**
+     * Validates that Card Name is present and within a reasonable length.
+     */
+    function validateCardName(?string $name): ?string {
+        $trimmed = trim($name ?? '');
+        if ($trimmed === '') {
+            return 'Card Name is required.';
+        }
+        if (strlen($trimmed) > 100) {
+            return 'Card Name cannot exceed 100 characters.';
+        }
+        return null;
+    }
+}
+
+if (!function_exists('validateCardType')) {
+    /**
+     * Validates that Card Type is an allowed value from the business categories.
+     */
+    function validateCardType(?string $type): ?string {
+        $trimmed = trim($type ?? '');
+        if ($trimmed === '') {
+            return 'Please select a Card Type.';
+        }
+        if (!in_array($trimmed, getValidCardTypes(), true)) {
+            return 'Invalid Card Type selected.';
+        }
+        return null;
+    }
+}
+
+if (!function_exists('validatePoints')) {
+    /**
+     * Validates that Points Required is a positive whole number.
+     */
+    function validatePoints($points): ?string {
+        $trimmed = trim((string)($points ?? ''));
+        if ($trimmed === '') {
+            return 'Cost to redeem (Points Required) is required.';
+        }
+        if (!filter_var($trimmed, FILTER_VALIDATE_INT) || (int)$trimmed < 1) {
+            return 'Points must be a positive integer greater than 0.';
+        }
+        return null;
+    }
+}
+
+if (!function_exists('validateCardValue')) {
+    /**
+     * Validates that Card Value is a positive number.
+     */
+    function validateCardValue($value): ?string {
+        $trimmed = trim((string)($value ?? ''));
+        if ($trimmed === '') {
+            return 'Card Value is required.';
+        }
+        if (!is_numeric($trimmed) || (float)$trimmed <= 0) {
+            return 'Card Value must be a valid dollar amount greater than $0.00.';
+        }
+        return null;
+    }
+}
+
 if (!function_exists('validateGiftCardData')) {
     /**
-     * Generalized validation for Gift Card attributes.
+     * Generalized validation for Gift Card attributes before inserting or updating.
      * Shared between card-add.php and card-update.php.
      *
      * @param array $input Raw $_POST input values
@@ -38,44 +118,35 @@ if (!function_exists('validateGiftCardData')) {
         $data = [];
 
         // 1. Card Name validation
-        $cardName = trim($input['cardName'] ?? '');
-        if ($cardName === '') {
-            $errors['cardName'] = 'Card Name is required.';
-        } elseif (strlen($cardName) > 100) {
-            $errors['cardName'] = 'Card Name cannot exceed 100 characters.';
+        $nameError = validateCardName($input['cardName'] ?? null);
+        if ($nameError !== null) {
+            $errors['cardName'] = $nameError;
         } else {
-            $data['cardName'] = $cardName;
+            $data['cardName'] = trim($input['cardName']);
         }
 
         // 2. Card Type validation
-        $cardType = trim($input['cardType'] ?? '');
-        $validTypes = getValidCardTypes();
-        if ($cardType === '') {
-            $errors['cardType'] = 'Please select a Card Type.';
-        } elseif (!in_array($cardType, $validTypes, true)) {
-            $errors['cardType'] = 'Invalid Card Type selected.';
+        $typeError = validateCardType($input['cardType'] ?? null);
+        if ($typeError !== null) {
+            $errors['cardType'] = $typeError;
         } else {
-            $data['cardType'] = $cardType;
+            $data['cardType'] = trim($input['cardType']);
         }
 
         // 3. Points Required validation
-        $pointsRaw = trim($input['points'] ?? '');
-        if ($pointsRaw === '') {
-            $errors['points'] = 'Cost to redeem (Points Required) is required.';
-        } elseif (!filter_var($pointsRaw, FILTER_VALIDATE_INT) || (int)$pointsRaw < 1) {
-            $errors['points'] = 'Points must be a positive integer greater than 0.';
+        $pointsError = validatePoints($input['points'] ?? null);
+        if ($pointsError !== null) {
+            $errors['points'] = $pointsError;
         } else {
-            $data['points'] = (int)$pointsRaw;
+            $data['points'] = (int)trim($input['points']);
         }
 
         // 4. Card Monetary Value validation
-        $cardValueRaw = trim($input['cardValue'] ?? '');
-        if ($cardValueRaw === '') {
-            $errors['cardValue'] = 'Card Value is required.';
-        } elseif (!is_numeric($cardValueRaw) || (float)$cardValueRaw <= 0) {
-            $errors['cardValue'] = 'Card Value must be a valid dollar amount greater than $0.00.';
+        $valueError = validateCardValue($input['cardValue'] ?? null);
+        if ($valueError !== null) {
+            $errors['cardValue'] = $valueError;
         } else {
-            $data['cardValue'] = (float)$cardValueRaw;
+            $data['cardValue'] = (float)trim($input['cardValue']);
         }
 
         // 5. Optional Image File validation
@@ -137,4 +208,3 @@ if (!function_exists('renderFieldFeedback')) {
         return '<div class="invalid-feedback">' . htmlspecialchars($errors[$field]) . '</div>';
     }
 }
-

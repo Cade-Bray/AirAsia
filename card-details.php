@@ -5,7 +5,7 @@ require_once 'includes/nav.php';
 
 // Validate cardId parameter (supports both schema name cardId and query parameter card_id)
 $rawCardId = $_GET['cardId'] ?? $_GET['card_id'] ?? null;
-$cardId = filter_var($rawCardId, FILTER_VALIDATE_INT) ?: null;
+$cardId = validateCardId($rawCardId);
 
 if (!$cardId) {
     if (ob_get_level() > 0) {
